@@ -30,7 +30,7 @@ from mpc_controller import torque_stance_leg_controller
 
 #uncomment the robot of choice
 #from mpc_controller import laikago_sim as robot_sim
-from mpc_controller import a1_sim as robot_sim
+from mpc_controller import jerbot as robot_sim
 
 FLAGS = flags.FLAGS
 
@@ -68,14 +68,14 @@ _STANCE_DURATION_SECONDS = [
 
 # Trotting
 _DUTY_FACTOR = [0.6] * 4
-_INIT_PHASE_FULL_CYCLE = [0.9, 0, 0, 0.9]
+#_INIT_PHASE_FULL_CYCLE = [0.9, 0, 0, 0.9]
+_INIT_PHASE_FULL_CYCLE = [0.9, 0]
 _MAX_TIME_SECONDS = 50
 
 _INIT_LEG_STATE = (
     gait_generator_lib.LegState.SWING,
-    gait_generator_lib.LegState.STANCE,
-    gait_generator_lib.LegState.STANCE,
-    gait_generator_lib.LegState.SWING,
+    gait_generator_lib.LegState.STANCE
+    
 )
 
 

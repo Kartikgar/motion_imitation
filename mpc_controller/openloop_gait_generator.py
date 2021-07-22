@@ -44,7 +44,7 @@ class OpenloopGaitGenerator(gait_generator.GaitGenerator):
       stance_duration: Sequence[float] = _NOMINAL_STANCE_DURATION,
       duty_factor: Sequence[float] = _NOMINAL_DUTY_FACTOR,
       initial_leg_state: Sequence[gait_generator.LegState] = LAIKAGO_TROTTING,
-      initial_leg_phase: Sequence[float] = (0, 0, 0, 0),
+      initial_leg_phase: Sequence[float] = (0, 0),
       contact_detection_phase_threshold:
       float = _NOMINAL_CONTACT_DETECTION_PHASE,
   ):
@@ -71,6 +71,7 @@ class OpenloopGaitGenerator(gait_generator.GaitGenerator):
     self._swing_duration = np.array(stance_duration) / np.array(
         duty_factor) - np.array(stance_duration)
     if len(initial_leg_phase) != self._robot.num_legs:
+      print(initial_leg_phase)
       raise ValueError(
           "The number of leg phases should be the same as number of legs.")
     self._initial_leg_phase = initial_leg_phase

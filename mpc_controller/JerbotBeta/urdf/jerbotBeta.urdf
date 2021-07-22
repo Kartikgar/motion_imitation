@@ -1,0 +1,447 @@
+<?xml version="1.0"?>
+<!-- created with Phobos 1.0.1 "Capricious Choutengan" -->
+  <robot name="jerbotBeta">
+
+    <link name="base">
+      <inertial>
+        <origin xyz="-0.04894 -0.10805 -0.08343" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="4e-05" ixy="0" ixz="0" iyy="3e-05" iyz="0" izz="3e-05"/>
+      </inertial>
+      <visual name="base_plate">
+        <origin xyz="0 0 -0.06825" rpy="0 -3.14159 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature"/>
+      </visual>
+      <visual name="battery">
+        <origin xyz="-0.00875 -0.00508 0.04651" rpy="0 -3.14159 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature019.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature019"/>
+      </visual>
+      <visual name="roll_motor_left">
+        <origin xyz="-0.04894 0.11424 -0.07957" rpy="0 -3.14159 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature006.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature006"/>
+      </visual>
+      <visual name="roll_motor_right">
+        <origin xyz="-0.04894 -0.10805 -0.08343" rpy="0 -3.14159 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature001"/>
+      </visual>
+      <collision name="base_plate.000">
+        <origin xyz="0.00125 -0.00037 -0.06878" rpy="0 -3.14159 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature.002.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="battery.000">
+        <origin xyz="-0.00875 -0.00508 0.04651" rpy="0 -3.14159 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature019.002.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="roll_motor_left.000">
+        <origin xyz="-0.04689 0.11542 -0.08101" rpy="0 -3.14159 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature006.002.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="roll_motor_right.000">
+        <origin xyz="-0.04689 -0.10807 -0.08269" rpy="0 -3.14159 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature001.002.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="foot_pitch_left">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="left_foot">
+        <origin xyz="0.0028 0.01806 0.00038" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature020.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature020"/>
+      </visual>
+      <visual name="left_foot_hinge">
+        <origin xyz="0.00123 0.01003 0.00058" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature018.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature018"/>
+      </visual>
+      <collision name="node18.000">
+        <origin xyz="0.00067 0.00981 0.00037" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature018.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="node20.000">
+        <origin xyz="0.00291 0.01867 0.0004" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature020.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="foot_pitch_right">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="right_foot">
+        <origin xyz="0.00325 -0.01721 -0.00013" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature021.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature021"/>
+      </visual>
+      <visual name="right_foot_hinge">
+        <origin xyz="0.00168 -0.00918 -0.00033" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature017.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature017"/>
+      </visual>
+      <collision name="node17.000">
+        <origin xyz="0.00111 -0.00866 -0.00013" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature017.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="node21.000">
+        <origin xyz="0.00336 -0.0175 -0.00016" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature021.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="hip_pitch_left">
+      <inertial>
+        <origin xyz="-0.00069 -0.10044 0.00938" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.00058" ixy="0" ixz="0" iyy="0.00058" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="left_upper_leg">
+        <origin xyz="-0.00069 -0.10044 0.00938" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature010.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature010"/>
+      </visual>
+      <collision name="node10.000">
+        <origin xyz="-0.00234 -0.10365 0.00823" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature010.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="hip_pitch_right">
+      <inertial>
+        <origin xyz="0.00076 0.10128 0.01511" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.00058" ixy="0" ixz="0" iyy="0.00058" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="right_upper_leg">
+        <origin xyz="0.00076 0.10128 0.01511" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature004.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature004"/>
+      </visual>
+      <collision name="node4.000">
+        <origin xyz="-0.00142 0.10714 0.01621" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature004.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="hip_roll_left">
+      <inertial>
+        <origin xyz="-0.0408 -0.01132 -0.03022" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="8e-05" iyz="0" izz="0.0001"/>
+      </inertial>
+      <visual name="pitch_motor_left">
+        <origin xyz="-0.0408 -0.01132 -0.03022" rpy="0 -1.5708 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature009.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature009"/>
+      </visual>
+      <visual name="roll_hinge_left">
+        <origin xyz="-0.01121 -0.0021 -0.02381" rpy="0 -1.5708 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature008.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature008"/>
+      </visual>
+      <collision name="node8.000">
+        <origin xyz="-0.01075 -0.00115 -0.02399" rpy="0 -1.5708 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature008.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="node9.000">
+        <origin xyz="-0.04083 -0.01132 -0.03024" rpy="0 -1.5708 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature009.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="hip_roll_right">
+      <inertial>
+        <origin xyz="-0.04086 0.01009 -0.04453" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="8e-05" iyz="0" izz="0.0001"/>
+      </inertial>
+      <visual name="pitch_motor_right">
+        <origin xyz="-0.04086 0.01009 -0.04453" rpy="0 -1.5708 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature003.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature003"/>
+      </visual>
+      <visual name="roll_hinge_right">
+        <origin xyz="-0.01052 0.00044 -0.02218" rpy="0 -1.5708 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature002.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature002"/>
+      </visual>
+      <collision name="node2.000">
+        <origin xyz="-0.01052 -0.00086 -0.02234" rpy="0 -1.5708 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature002.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="node3.000">
+        <origin xyz="-0.04083 0.00886 -0.04408" rpy="0 -1.5708 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature003.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="knee_pitch_left">
+      <inertial>
+        <origin xyz="0.00694 -0.22948 -0.00354" rpy="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="left_foot_servo">
+        <origin xyz="0.00694 -0.22948 -0.00354" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature014.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature014"/>
+      </visual>
+      <visual name="left_lower_leg">
+        <origin xyz="0.00105 -0.03384 0.00481" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature012.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature012"/>
+      </visual>
+      <collision name="node12.000">
+        <origin xyz="0.0013 -0.03298 0.00275" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature012.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="node14.000">
+        <origin xyz="0.00682 -0.22971 -0.0043" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature014.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="knee_pitch_right">
+      <inertial>
+        <origin xyz="0.00628 0.23309 0.00906" rpy="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="right_foot_servo">
+        <origin xyz="0.00628 0.23309 0.00906" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature013.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature013"/>
+      </visual>
+      <visual name="right_lower_leg">
+        <origin xyz="0.00114 0.03509 0.00635" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature005.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Part__Feature005"/>
+      </visual>
+      <collision name="node13.000">
+        <origin xyz="0.00622 0.23325 0.00831" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature013.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+      <collision name="node5.000">
+        <origin xyz="0.00074 0.03454 0.00841" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="../meshes/stl/Part__Feature005.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="foot_pitch_left" type="continuous">
+      <origin xyz="0.00694 -0.23446 -0.00118" rpy="-3.14159 0 0"/>
+      <parent link="knee_pitch_left"/>
+      <child link="foot_pitch_left"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="foot_pitch_right" type="continuous">
+      <origin xyz="0.00589 0.23856 0.01144" rpy="3.14159 0 0"/>
+      <parent link="knee_pitch_right"/>
+      <child link="foot_pitch_right"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="hip_pitch_left" type="continuous">
+      <origin xyz="-0.04213 0.00101 -0.0394" rpy="-1.5708 -1.5708 0"/>
+      <parent link="hip_roll_left"/>
+      <child link="hip_pitch_left"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="hip_pitch_right" type="continuous">
+      <origin xyz="-0.03981 -0.00425 -0.04031" rpy="1.5708 -1.5708 0"/>
+      <parent link="hip_roll_right"/>
+      <child link="hip_pitch_right"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="hip_roll_left" type="continuous">
+      <origin xyz="-0.02288 0.112 -0.07697" rpy="0 -1.5708 0"/>
+      <parent link="base"/>
+      <child link="hip_roll_left"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="hip_roll_right" type="continuous">
+      <origin xyz="-0.02277 -0.11719 -0.07968" rpy="0 -1.5708 0"/>
+      <parent link="base"/>
+      <child link="hip_roll_right"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="knee_pitch_left" type="continuous">
+      <origin xyz="0.00427 -0.21372 -0.00179" rpy="0 0 0"/>
+      <parent link="hip_pitch_left"/>
+      <child link="knee_pitch_left"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="knee_pitch_right" type="continuous">
+      <origin xyz="0.00508 0.2134 0.01171" rpy="0 0 0"/>
+      <parent link="hip_pitch_right"/>
+      <child link="knee_pitch_right"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+    <material name="Part__Feature">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature001">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature002">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature003">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature004">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature005">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature006">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature008">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature009">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature010">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature012">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature013">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature014">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature017">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature018">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature019">
+      <color rgba="0.75294 0.23189 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature020">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Part__Feature021">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+  </robot>
