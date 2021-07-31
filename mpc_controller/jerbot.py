@@ -1,17 +1,19 @@
 import re
 import numpy as np
+import time
 
 URDF_NAME = "JerbotBeta/urdf/jerbotBeta.urdf"
 START_POS = [0, 0, 0.48]
 
 MPC_BODY_MASS = 50/9.8
-MPC_BODY_INERTIA = (0.07335, 0, 0, 0, 0.25068, 0, 0, 0, 0.25447)
-MPC_BODY_HEIGHT = 0.42
+# (0.003973588848877378, 0.0012032566710353308, 0.004079428503404941)
+MPC_BODY_INERTIA = (0.003973588848877378, 0, 0, 0, 0.0012032566710353308, 0, 0, 0, 0.004079428503404941)
+MPC_BODY_HEIGHT = START_POS[2]
 
-MPC_VELOCITY_MULTIPLIER = 1.0
+MPC_VELOCITY_MULTIPLIER = 0.0
 
 
-ACTION_REPEAT = 10
+ACTION_REPEAT = 5
 
 _IDENTITY_ORIENTATION=[0,0,0,1]
 CHASSIS_NAME_PATTERN = re.compile(r"\w+_chassis_\w+")
@@ -19,33 +21,40 @@ PITCH_MOTOR_NAME_PATTERN = re.compile(r"hip_pitch_\w+")
 ROLL_MOTOR_NAME_PATTERN = re.compile(r"hip_roll_\w+")
 KNEE_NAME_PATTERN = re.compile(r"knee_\w+")
 TOE_NAME_PATTERN = re.compile(r"foot_\w+")
+
 _DEFAULT_HIP_POSITIONS = (
-    (0.21, -0.1157, 0),
-    (0.21, 0.1157, 0),
-    (-0.21, -0.1157, 0),
-    (-0.21, 0.1157, 0),
+    (-0.04689,  0.11542, 0),
+    (-0.04689, -0.11542, 0),
+
 )
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
 
 HIP_JOINT_OFFSET = 0.0
-UPPER_LEG_JOINT_OFFSET = -0.6
-KNEE_JOINT_OFFSET = 0.66
+UPPER_LEG_JOINT_OFFSET = 0.0
+KNEE_JOINT_OFFSET = 0.00
 
 
-jerbot_DEFAULT_ABDUCTION_ANGLE = 0
-jerbot_DEFAULT_HIP_ROLL_ANGLE = 0.67
-jerbot_DEFAULT_HIP_PITCH_ANGLE = 0.67
-jerbot_DEFAULT_KNEE_ANGLE = -1.25
+jerbot_DEFAULT_HIP_ROLL_ANGLE = np.radians(0)
+jerbot_DEFAULT_HIP_PITCH_ANGLE = np.radians(40)
+jerbot_DEFAULT_KNEE_ANGLE = np.radians(80)
 NUM_LEGS = 2
 NUM_MOTORS = 6
 # Bases on the readings from Laikago's default pose.
+
+# order is from the urdf
 INIT_MOTOR_ANGLES = np.array([
-    jerbot_DEFAULT_ABDUCTION_ANGLE,
-    jerbot_DEFAULT_HIP_ROLL_ANGLE,
+    -jerbot_DEFAULT_HIP_PITCH_ANGLE,
+    -jerbot_DEFAULT_HIP_ROLL_ANGLE,
+    jerbot_DEFAULT_KNEE_ANGLE,
+
     jerbot_DEFAULT_HIP_PITCH_ANGLE,
-    jerbot_DEFAULT_KNEE_ANGLE
-] * NUM_LEGS)
+    jerbot_DEFAULT_HIP_ROLL_ANGLE,
+    -jerbot_DEFAULT_KNEE_ANGLE,
+
+])
+
+
 MOTOR_NAMES = [
     "hip_pitch_right",
     "hip_roll_right",
@@ -215,6 +224,7 @@ class SimpleRobot(object):
     self.pybullet_client = pybullet_client
     self.time_step = simulation_time_step
     self.biped = robot_uid
+    print(self.pybullet_client.getDynamicsInfo(robot_uid,-1))
     self.num_legs = NUM_LEGS
     self.num_motors = NUM_MOTORS
     self._BuildJointNameToIdDict()
@@ -230,10 +240,10 @@ class SimpleRobot(object):
     self._motor_direction= np.array([-1, 1,  1,  1,  1,  1])
     #self._motor_direction= np.array([-1, -1, 1,  1,  1,1,  1,  1])
     self.ReceiveObservation()
-    self._kp = self.GetMotorPositionGains()
-    self._kd = self.GetMotorVelocityGains()
+    self._kp = [5.0]*6  #self.GetMotorPositionGains()
+    self._kd = [0.2]*6 #self.GetMotorVelocityGains()
     self._motor_model = jerbotMotorModel(kp=self._kp, kd=self._kd, motor_control_mode=MOTOR_CONTROL_HYBRID)
-    #self._SettleDownForReset(reset_time=1.0)
+    # self._SettleDownForReset(reset_time=0.1)
 
 
   def ResetPose(self):
@@ -246,7 +256,6 @@ class SimpleRobot(object):
           targetVelocity=0,
           force=0)
     for name, i in zip(MOTOR_NAMES, range(len(MOTOR_NAMES))):
-      
       if "hip_pitch"  in name:
         angle = INIT_MOTOR_ANGLES[i] + HIP_JOINT_OFFSET
       elif "knee_pitch" in name:
@@ -483,17 +492,20 @@ class SimpleRobot(object):
   def GetFootContacts(self):
     all_contacts = self.pybullet_client.getContactPoints(bodyA=self.biped)
 
-    contacts = [False, False, False, False]
+    contacts = [False, False]
     for contact in all_contacts:
+      print(contact)
       # Ignore self contacts
       if contact[_BODY_B_FIELD_NUMBER] == self.biped:
         continue
       try:
         toe_link_index = self._foot_link_ids.index(
             contact[_LINK_A_FIELD_NUMBER])
+        print("toe",toe_link_index)
         contacts[toe_link_index] = True
       except ValueError:
         continue
+    print(contacts)
     return contacts
     
   def GetTrueMotorAngles(self):

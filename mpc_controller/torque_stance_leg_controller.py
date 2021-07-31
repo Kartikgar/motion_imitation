@@ -66,8 +66,8 @@ class TorqueStanceLegController(leg_controller.LegController):
       body_inertia: Tuple[float, float, float, float, float, float, float,
                           float, float] = (0.07335, 0, 0, 0, 0.25068, 0, 0, 0,
                                            0.25447),
-      num_legs: int = 4,
-      friction_coeffs: Sequence[float] = (0.45, 0.45, 0.45, 0.45),
+      num_legs: int = 2,
+      friction_coeffs: Sequence[float] = (0.45, 0.45),
       qp_solver = convex_mpc.QPOASES
   ):
     """Initializes the class.
@@ -174,7 +174,6 @@ class TorqueStanceLegController(leg_controller.LegController):
           predicted_contact_forces[i * _FORCE_DIMENSION:(i + 1) *
                                    _FORCE_DIMENSION])
     action = {}
-    print(contact_forces)
     for leg_id, force in contact_forces.items():
       # While "Lose Contact" is useful in simulation, in real environment it's
       # susceptible to sensor noise. Disabling for now.

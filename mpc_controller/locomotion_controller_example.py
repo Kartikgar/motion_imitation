@@ -39,7 +39,7 @@ _NUM_SIMULATION_ITERATION_STEPS = 300
 
 
 _STANCE_DURATION_SECONDS = [
-    0.3
+    0.5
 ] * 2  # For faster trotting (v > 1.5 ms reduce this to 0.13s).
 
 # Standing
@@ -69,7 +69,7 @@ _STANCE_DURATION_SECONDS = [
 # Trotting
 _DUTY_FACTOR = [0.6] * 2
 #_INIT_PHASE_FULL_CYCLE = [0.9, 0, 0, 0.9]
-_INIT_PHASE_FULL_CYCLE = [0.9, 0]
+_INIT_PHASE_FULL_CYCLE = [0.5, 0.5]
 _MAX_TIME_SECONDS = 50
 
 _INIT_LEG_STATE = (
@@ -218,7 +218,6 @@ def _run_example(max_time=_MAX_TIME_SECONDS):
   
   controller = _setup_controller(robot)
   controller.reset()
-  
   p.configureDebugVisualizer(p.COV_ENABLE_RENDERING,1)
   #while p.isConnected():
   #  pos,orn = p.getBasePositionAndOrientation(robot_uid)
@@ -227,8 +226,10 @@ def _run_example(max_time=_MAX_TIME_SECONDS):
   #  time.sleep(1./240)  
   current_time = robot.GetTimeSinceReset()
   #logId = p.startStateLogging(p.STATE_LOGGING_PROFILE_TIMINGS, "mpc.json")
-  
+  # time.sleep(100)
   while current_time < max_time:
+    print(current_time)
+    time.sleep(0.5)
     #pos,orn = p.getBasePositionAndOrientation(robot_uid)
     #print("pos=",pos, " orn=",orn)
     p.submitProfileTiming("loop")
