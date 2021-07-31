@@ -15,7 +15,8 @@ ACTION_REPEAT = 10
 
 _IDENTITY_ORIENTATION=[0,0,0,1]
 CHASSIS_NAME_PATTERN = re.compile(r"\w+_chassis_\w+")
-MOTOR_NAME_PATTERN = re.compile(r"hip_\w+")
+PITCH_MOTOR_NAME_PATTERN = re.compile(r"hip_pitch_\w+")
+ROLL_MOTOR_NAME_PATTERN = re.compile(r"hip_roll_\w+")
 KNEE_NAME_PATTERN = re.compile(r"knee_\w+")
 TOE_NAME_PATTERN = re.compile(r"foot_\w+")
 _DEFAULT_HIP_POSITIONS = (
@@ -37,7 +38,7 @@ jerbot_DEFAULT_HIP_ROLL_ANGLE = 0.67
 jerbot_DEFAULT_HIP_PITCH_ANGLE = 0.67
 jerbot_DEFAULT_KNEE_ANGLE = -1.25
 NUM_LEGS = 2
-NUM_MOTORS = 8
+NUM_MOTORS = 6
 # Bases on the readings from Laikago's default pose.
 INIT_MOTOR_ANGLES = np.array([
     jerbot_DEFAULT_ABDUCTION_ANGLE,
@@ -47,13 +48,11 @@ INIT_MOTOR_ANGLES = np.array([
 ] * NUM_LEGS)
 MOTOR_NAMES = [
     "hip_pitch_right",
-    
+    "hip_roll_right",
     "knee_pitch_right",
-    "foot_pitch_right",
     "hip_pitch_left",
-    
+    "hip_roll_left",
     "knee_pitch_left",
-    "foot_pitch_left"
     ]
 
 #Use a PD controller
@@ -225,16 +224,16 @@ class SimpleRobot(object):
     self._motor_enabled_list = [True] * self.num_motors
     self._step_counter = 0
     self._state_action_counter = 0
-    self._motor_offset= np.array([ 0.,0.0,  -0.6,   0.66,  0., 0.0,  -0.6,   0.66])
-    #self._motor_offset= np.array([ 0.,  -0.6,   0.66,  0.,  -0.6,   0.66])
+    #self._motor_offset= np.array([ 0.,0.0,  -0.6,   0.66,  0., 0.0,  -0.6,   0.66])
+    self._motor_offset= np.array([ 0.,  -0.6,   0.66,  0.,  -0.6,   0.66])
 
-    #self._motor_direction= np.array([-1, 1,  1,  1,  1,  1])
-    self._motor_direction= np.array([-1, -1, 1,  1,  1,1,  1,  1])
+    self._motor_direction= np.array([-1, 1,  1,  1,  1,  1])
+    #self._motor_direction= np.array([-1, -1, 1,  1,  1,1,  1,  1])
     self.ReceiveObservation()
     self._kp = self.GetMotorPositionGains()
     self._kd = self.GetMotorVelocityGains()
     self._motor_model = jerbotMotorModel(kp=self._kp, kd=self._kd, motor_control_mode=MOTOR_CONTROL_HYBRID)
-    self._SettleDownForReset(reset_time=1.0)
+    #self._SettleDownForReset(reset_time=1.0)
 
 
   def ResetPose(self):
@@ -252,7 +251,7 @@ class SimpleRobot(object):
         angle = INIT_MOTOR_ANGLES[i] + HIP_JOINT_OFFSET
       elif "knee_pitch" in name:
         angle = INIT_MOTOR_ANGLES[i] + UPPER_LEG_JOINT_OFFSET
-      elif "foot_pitch" in name:
+      elif "hip_roll" in name:
         angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
       else:
         raise ValueError("The name %s is not recognized as a motor joint." %
@@ -311,6 +310,7 @@ class SimpleRobot(object):
     """Compute the Jacobian for a given leg."""
     # Does not work for Minitaur which has the four bar mechanism for now.
     assert len(self._foot_link_ids) == self.num_legs
+    
     return self.compute_jacobian(
         robot=self,
         link_id=self._foot_link_ids[leg_id],
@@ -318,6 +318,7 @@ class SimpleRobot(object):
     
   def MapContactForceToJointTorques(self, leg_id, contact_force):
     """Maps the foot contact force to the leg joint torques."""
+    
     jv = self.ComputeJacobian(leg_id)
     all_motor_torques = np.matmul(contact_force, jv)
     motor_torques = {}
@@ -628,7 +629,9 @@ class SimpleRobot(object):
       joint_id = self._joint_name_to_id[joint_name]
       if CHASSIS_NAME_PATTERN.match(joint_name):
         self._chassis_link_ids.append(joint_id)
-      elif MOTOR_NAME_PATTERN.match(joint_name):
+      elif ROLL_MOTOR_NAME_PATTERN.match(joint_name):
+        self._motor_link_ids.append(joint_id)
+      elif PITCH_MOTOR_NAME_PATTERN.match(joint_name):
         self._motor_link_ids.append(joint_id)
       # We either treat the lower leg or the toe as the foot link, depending on
       # the urdf version used.
@@ -640,6 +643,7 @@ class SimpleRobot(object):
       else:
         raise ValueError("Unknown category of joint %s" % joint_name)
 
+    print(self._foot_link_ids)
     self._leg_link_ids.extend(self._knee_link_ids)
     self._leg_link_ids.extend(self._foot_link_ids)
 

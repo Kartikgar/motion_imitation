@@ -40,7 +40,7 @@ _NUM_SIMULATION_ITERATION_STEPS = 300
 
 _STANCE_DURATION_SECONDS = [
     0.3
-] * 4  # For faster trotting (v > 1.5 ms reduce this to 0.13s).
+] * 2  # For faster trotting (v > 1.5 ms reduce this to 0.13s).
 
 # Standing
 # _DUTY_FACTOR = [1.] * 4
@@ -67,15 +67,14 @@ _STANCE_DURATION_SECONDS = [
 # )
 
 # Trotting
-_DUTY_FACTOR = [0.6] * 4
+_DUTY_FACTOR = [0.6] * 2
 #_INIT_PHASE_FULL_CYCLE = [0.9, 0, 0, 0.9]
 _INIT_PHASE_FULL_CYCLE = [0.9, 0]
 _MAX_TIME_SECONDS = 50
 
 _INIT_LEG_STATE = (
     gait_generator_lib.LegState.SWING,
-    gait_generator_lib.LegState.STANCE
-    
+    gait_generator_lib.LegState.STANCE    
 )
 
 

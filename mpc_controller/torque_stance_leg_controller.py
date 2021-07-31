@@ -61,8 +61,8 @@ class TorqueStanceLegController(leg_controller.LegController):
       state_estimator: Any,
       desired_speed: Tuple[float, float] = (0, 0),
       desired_twisting_speed: float = 0,
-      desired_body_height: float = 0.45,
-      body_mass: float = 220 / 9.8,
+      desired_body_height: float = 0.42,
+      body_mass: float = 50 / 9.8,
       body_inertia: Tuple[float, float, float, float, float, float, float,
                           float, float] = (0.07335, 0, 0, 0, 0.25068, 0, 0, 0,
                                            0.25447),
@@ -174,6 +174,7 @@ class TorqueStanceLegController(leg_controller.LegController):
           predicted_contact_forces[i * _FORCE_DIMENSION:(i + 1) *
                                    _FORCE_DIMENSION])
     action = {}
+    print(contact_forces)
     for leg_id, force in contact_forces.items():
       # While "Lose Contact" is useful in simulation, in real environment it's
       # susceptible to sensor noise. Disabling for now.

@@ -21,12 +21,14 @@ from mpc_controller import gait_generator
 LAIKAGO_TROTTING = (
     gait_generator.LegState.SWING,
     gait_generator.LegState.STANCE,
-    gait_generator.LegState.STANCE,
-    gait_generator.LegState.SWING,
+   # gait_generator.LegState.STANCE,
+    #gait_generator.LegState.SWING,
 )
 
-_NOMINAL_STANCE_DURATION = (0.3, 0.3, 0.3, 0.3)
-_NOMINAL_DUTY_FACTOR = (0.5, 0.5, 0.5, 0.5)
+#_NOMINAL_STANCE_DURATION = (0.3, 0.3, 0.3, 0.3)
+_NOMINAL_STANCE_DURATION = (0.3, 0.3)
+#_NOMINAL_DUTY_FACTOR = (0.5, 0.5, 0.5, 0.5)
+_NOMINAL_DUTY_FACTOR = (0.5, 0.5)
 _NOMINAL_CONTACT_DETECTION_PHASE = 0.1
 
 
